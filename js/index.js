@@ -89,6 +89,26 @@
             $btn.addEventListener('click', handleClick);
         },
 
+        teamBlock: function() {
+            const selector = "team__item";
+            const activeClass = "active";
+
+            const handleClick = e => {
+                if (e.target.closest(`.${selector}`)) {
+                    if (!e.target.classList.contains(selector)) {
+                        const parent = helpers.findAncestor(e.target, selector);
+
+                        parent.classList.toggle(activeClass);
+                    } else {
+                        e.target.classList.toggle(activeClass);
+                    }
+                }
+            }
+
+            document.addEventListener('click', handleClick);
+            
+        },
+
         upBtn: function() {
             const $btn = document.querySelector('.up-btn-js');
             
