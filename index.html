@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CDTI</title>
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/marquee.min.js"></script>
+    <script src="./js/index.js"></script>
+</head>
+<body>
+    <svg style="display:none">
+        <symbol id="user-icon">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 2.25C10.1528 2.25 8.25 4.15279 8.25 6.5C8.25 8.84721 10.1528 10.75 12.5 10.75C14.8472 10.75 16.75 8.84721 16.75 6.5C16.75 4.15279 14.8472 2.25 12.5 2.25ZM9.75 6.5C9.75 4.98122 10.9812 3.75 12.5 3.75C14.0188 3.75 15.25 4.98122 15.25 6.5C15.25 8.01878 14.0188 9.25 12.5 9.25C10.9812 9.25 9.75 8.01878 9.75 6.5Z" fill="#EDEDED"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 12.75C8.21979 12.75 4.75 16.2198 4.75 20.5V21.75H20.25V20.5C20.25 16.2198 16.7802 12.75 12.5 12.75ZM12.5 14.25C15.8681 14.25 18.6139 16.9141 18.7451 20.25H6.25491C6.38613 16.9141 9.13195 14.25 12.5 14.25Z" fill="#EDEDED"/>
+        </symbol>
+        <symbol id="phone-icon">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.77666 11.0969C8.06117 13.8891 10.6185 16.4464 13.4107 18.731L14.1304 19.3198C15.4227 20.3771 17.3059 20.2832 18.4865 19.1026L20.3463 17.2428L16.8107 13.7073L14.1591 16.359L8.13806 10.3379L10.7985 7.69512L7.26478 4.16136L5.40506 6.02109C4.22441 7.20174 4.13048 9.08493 5.18779 10.3772L5.77666 11.0969ZM12.4608 19.8919C9.59144 17.5442 6.9634 14.9162 4.61572 12.0468L4.02685 11.3271C2.48155 9.43836 2.61883 6.68599 4.3444 4.96043L7.26478 2.04004L12.9234 7.69866L10.2629 10.3415L14.1591 14.2376L16.8107 11.586L22.4676 17.2428L19.5472 20.1632C17.8216 21.8888 15.0693 22.0261 13.1806 20.4808L12.4608 19.8919Z" fill="#EDEDED"/>
+        </symbol>
+        <symbol id="email-icon">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.875 3.5415H18.125V16.4582H1.875V3.5415ZM3.125 4.7915V6.26033L10 9.31589L16.875 6.26033V4.7915H3.125ZM16.875 7.62823L10 10.6838L3.125 7.62823V15.2082H16.875V7.62823Z" fill="#EDEDED"/>
+        </symbol>
+        <symbol id="address-icon">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.0003 5.625C8.50456 5.625 7.29199 6.83756 7.29199 8.33333C7.29199 9.8291 8.50456 11.0417 10.0003 11.0417C11.4961 11.0417 12.7087 9.8291 12.7087 8.33333C12.7087 6.83756 11.4961 5.625 10.0003 5.625ZM8.54199 8.33333C8.54199 7.52792 9.19491 6.875 10.0003 6.875C10.8057 6.875 11.4587 7.52792 11.4587 8.33333C11.4587 9.13875 10.8057 9.79167 10.0003 9.79167C9.19491 9.79167 8.54199 9.13875 8.54199 8.33333Z" fill="#EDEDED"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.0003 1.875C6.43349 1.875 3.54199 4.76649 3.54199 8.33333C3.54199 9.51383 3.95255 10.7098 4.5236 11.8111C5.09747 12.9179 5.85537 13.9708 6.6012 14.8765C7.34856 15.784 8.09418 16.5561 8.65228 17.1009C8.93172 17.3737 9.16511 17.5904 9.32949 17.7397C9.4117 17.8144 9.47672 17.8722 9.52167 17.9118C9.54415 17.9316 9.56162 17.9469 9.57372 17.9574C9.57977 17.9626 9.58449 17.9667 9.58781 17.9696L9.59175 17.973L9.59293 17.974L9.59332 17.9743C9.59346 17.9744 9.59358 17.9745 10.0003 17.5L9.59358 17.9745L10.0003 18.3232L10.4071 17.9745L10.0003 17.5C10.4071 17.9745 10.4072 17.9744 10.4073 17.9743L10.4077 17.974L10.4089 17.973L10.4128 17.9696C10.4162 17.9667 10.4209 17.9626 10.4269 17.9574C10.439 17.9469 10.4565 17.9316 10.479 17.9118C10.5239 17.8722 10.589 17.8144 10.6712 17.7397C10.8355 17.5904 11.0689 17.3737 11.3484 17.1009C11.9065 16.5561 12.6521 15.784 13.3994 14.8765C14.1453 13.9708 14.9032 12.9179 15.477 11.8111C16.0481 10.7098 16.4587 9.51383 16.4587 8.33333C16.4587 4.76649 13.5672 1.875 10.0003 1.875ZM10.4752 16.2064C10.2938 16.3835 10.1332 16.5354 10.0003 16.6587C9.86748 16.5354 9.70684 16.3835 9.52545 16.2064C8.98981 15.6835 8.27709 14.9452 7.56612 14.0819C6.85362 13.2167 6.15318 12.2384 5.6333 11.2357C5.1106 10.2277 4.79199 9.23617 4.79199 8.33333C4.79199 5.45685 7.12384 3.125 10.0003 3.125C12.8768 3.125 15.2087 5.45685 15.2087 8.33333C15.2087 9.23617 14.89 10.2277 14.3674 11.2357C13.8475 12.2384 13.147 13.2167 12.4345 14.0819C11.7236 14.9452 11.0108 15.6835 10.4752 16.2064Z" fill="#EDEDED"/>    
+        </symbol>
+        <symbol id="arrow-top-icon">
+            <path d="M13.9998 2.2627L23.4039 11.6668L22.1665 12.9042L14.8748 5.61255L14.8748 25.3751H13.1248L13.1248 5.61256L5.83314 12.9042L4.5957 11.6668L13.9998 2.2627Z" fill="#EDEDED"/>    
+        </symbol>
+        <symbol id="ability-icon">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M26 13.5417C22.7093 13.5417 20.0417 16.2093 20.0417 19.5C20.0417 22.7907 22.7093 25.4583 26 25.4583C29.2907 25.4583 31.9584 22.7907 31.9584 19.5C31.9584 16.2093 29.2907 13.5417 26 13.5417ZM23.2917 19.5C23.2917 18.0042 24.5043 16.7917 26 16.7917C27.4958 16.7917 28.7084 18.0042 28.7084 19.5C28.7084 20.9958 27.4958 22.2083 26 22.2083C24.5043 22.2083 23.2917 20.9958 23.2917 19.5Z" fill="#2F55F2"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M26 4.875C17.9229 4.875 11.375 11.4228 11.375 19.5C11.375 21.8207 11.9155 24.0151 12.8776 25.9643L5.56519 38.6297L14.4448 39.4997L19.6381 46.7547L25.9958 35.7427L32.3536 46.7547L37.5469 39.4997L46.4265 38.6297L39.1186 25.9721C40.0831 24.021 40.625 21.8238 40.625 19.5C40.625 11.4228 34.0772 4.875 26 4.875ZM10.9015 35.887L14.8787 28.9982C17.0093 31.4904 19.9629 33.2579 23.3187 33.8797L19.3452 40.762L16.2292 36.409L10.9015 35.887ZM37.1163 29.004C34.9846 31.495 32.0301 33.2611 28.6738 33.8811L32.6465 40.762L35.7624 36.409L41.0902 35.887L37.1163 29.004ZM14.625 19.5C14.625 13.2178 19.7178 8.125 26 8.125C32.2823 8.125 37.375 13.2178 37.375 19.5C37.375 25.7822 32.2823 30.875 26 30.875C19.7178 30.875 14.625 25.7822 14.625 19.5Z" fill="#2F55F2"/>    
+        </symbol>
+        <symbol id="rocket-icon">
+            <path d="M34.5319 16.4313C33.6858 15.5851 32.3139 15.5851 31.4678 16.4313C30.6216 17.2774 30.6216 18.6492 31.4678 19.4954C32.3139 20.3415 33.6858 20.3415 34.5319 19.4954C35.378 18.6492 35.378 17.2774 34.5319 16.4313Z" fill="#2F55F2"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M44.9152 6.2832L43.0946 22.6684L37.2241 28.395L40.0385 38.0026L30.8351 47.206L24.4676 40.8385L19.4461 45.7369L4.89131 31.1821L9.9129 26.2837L4.02405 20.3948L13.2274 11.1915L22.577 13.9302L28.5525 8.10128L44.9152 6.2832ZM26.7943 38.569L34.5902 30.9643L36.3779 37.067L30.8351 42.6098L26.7943 38.569ZM19.907 16.5347L12.2395 24.0141L8.62024 20.3948L14.163 14.8521L19.907 16.5347ZM30.022 11.208L9.51621 31.2108L19.4745 41.1691L39.9929 21.1539L41.2365 9.96195L30.022 11.208Z" fill="#2F55F2"/>
+        </symbol>
+    </svg>
+    <div class="app">
+<!-- HEADER -->
+        <header class="header">
+            <div class="container">
+                <div class="header__left">
+                    <div class="header__logo">
+                        <a href="#">
+                            <img src="./assets/images/logo.svg" alt="Logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="header__middle">
+                    <nav class="header__navigation">
+                        <ul class="header__list">
+                            <li><a href="#">О нас</a></li>
+                            <li><a href="#">проекты</a></li>
+                            <li><a href="#">Команда</a></li>
+                            <li><a href="#">Возможности</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="header__right">
+                    <div class="header__langs lang-switcher-js">
+                        <div class="header__langs-default lang-switcher-js__active">
+                            <span>Ру</span>
+                        </div>
+                        <div class="header__langs-dropdown lang-switcher-js__dropdown">
+                            <a href="#">Уз</a>
+                            <a href="#">Ру</a>
+                            <a href="#">ENG</a>
+                        </div>
+                    </div>
+                    <div class="header__burger">
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </header>
+<!-- /HEADER -->
+
+
+
+
+
+
+<!-- BANNER -->
+        <div class="banner container">
+            <div class="banner__left">
+                <h1 class="banner__title">
+                    Меняем будущее<br/> в настоящем
+                </h1>
+                <p class="banner__subtitle">
+                    Какое нибудь описание, переходящее <br/>в теги которые снизу
+                </p>
+                <div class="banner__tags">
+                    <a href="#" class="banner__tags-item">#машинное зрение</a>
+                    <a href="#" class="banner__tags-item">#искусственный интеллект</a>
+                    <a href="#" class="banner__tags-item">#цифровые экосистемы</a>
+                    <a href="#" class="banner__tags-item">#обучение нейросетей</a>
+                    <a href="#" class="banner__tags-item">#программное обеспечение</a>
+                    <a href="#" class="banner__tags-item">#мобильные приложения</a>
+                </div>
+            </div>
+            <div class="banner__right">
+                <img src="./assets/images/cube.png" alt="cube">
+            </div>
+            <div class="banner__numbers">
+                <div class="banner__numbers-item">
+                    <p class="banner__numbers-item-title">
+                        5
+                    </p>
+                    <span class="banner__numbers-item-subtitle">года на рынке</span>
+                </div>
+                <div class="banner__numbers-item">
+                    <p class="banner__numbers-item-title">
+                        500
+                    </p>
+                    <span class="banner__numbers-item-subtitle">сотрудников</span>
+                </div>
+                <div class="banner__numbers-item">
+                    <p class="banner__numbers-item-title">
+                        20
+                    </p>
+                    <span class="banner__numbers-item-subtitle">филиалов по стране</span>
+                </div>
+            </div>
+        </div>
+<!-- /BANNER -->
+
+
+
+
+
+
+
+<!-- ABILITIES -->
+        <div class="abilities">
+            <div class="abilities__top container">
+                <p class="abilities__title">
+                    Возможности
+                </p>
+                <div class="abilities__columns">
+                    <div class="abilities__left-col abilities__col">
+                        <p class="abilities__col-title title-lg">
+                            Мы делаем
+                            <svg>
+                                <use href="#ability-icon"/>
+                            </svg>
+                        </p>
+                        <div class="abilities__col-text subtitle-lg">
+                            web-продукты, программное обеспечение, мобильные приложения<br/> для Android/iOS, машинное обучение, работу с нейросетями,</br> разработку информационных систем уровня Enterprise и Bigdata.
+                        </div>
+                    </div>
+                    <div class="abilities__right-col abilities__col">
+                        <p class="abilities__col-title title-lg">
+                            Нужен текст
+                            <svg>
+                                <use href="#rocket-icon"/>
+                            </svg>
+                        </p>
+                        <div class="abilities__col-text subtitle-lg">
+                            Объединяя наши усилия, таланты и опыт, мы добиваемся лучших<br/>результатов. Мы ценим вклад каждого сотрудника в общий<br/>результат компании.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="abilities__marquee">
+                <div class="abilities__marquee-top abilities__marquee-line">
+                    <div>
+                        <a href="" class="abilities__marquee-item">Java</a>
+                        <a href="" class="abilities__marquee-item">Python</a>
+                        <a href="" class="abilities__marquee-item">Reactjs</a>
+                        <a href="" class="abilities__marquee-item">Swift</a>
+                        <a href="" class="abilities__marquee-item">Kotlin</a>
+                        <a href="" class="abilities__marquee-item">Kalman Filter</a>
+                        <a href="" class="abilities__marquee-item">Axon</a>
+                        <a href="" class="abilities__marquee-item">Microservices</a>
+                    </div>
+                </div>
+                <div class="abilities__marquee-bot abilities__marquee-line">
+                    <div>
+                        <a href="" class="abilities__marquee-item">Postgres</a>
+                        <a href="" class="abilities__marquee-item">Clickhouse</a>
+                        <a href="" class="abilities__marquee-item">Elastic search</a>
+                        <a href="" class="abilities__marquee-item">Tensorflow</a>
+                        <a href="" class="abilities__marquee-item">Cuda</a>
+                        <a href="" class="abilities__marquee-item">OpenCV</a>
+                        <a href="" class="abilities__marquee-item">DDD</a>
+                        <a href="" class="abilities__marquee-item">Yolo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- /ABILITIES -->
+
+
+
+
+
+
+
+
+<!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer__callback">
+                <div class="container">
+                    <div class="footer__callback-header">
+                        <h2 class="footer__callback-title title-lg">
+                            Оставьте заявку и мы<br>
+                            свяжемся с вами
+                        </h2>
+                        <p class="footer__callback-subtitle subtitle-lg">
+                            Оставьте заявку и мы свяжемся с вами
+                        </p>
+                    </div>
+                    <div class="footer__callback-form">
+                        <form action="#" class="site-form">
+                            <div class="site-form__item">
+                                <label for="input[name]">
+                                    <span class="form-field-title">Имя</span>
+                                    <div class="site-form__item-field">
+                                        <input type="text" id="input[name]" name="name">
+                                        <span class="form-input-icon">
+                                            <svg >
+                                                <use href="#user-icon"/>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    
+                                    <span class="form-error-msg">
+                                        Введите корректные данные
+                                    </span>
+                                    
+                                </label>
+                            </div>
+                            <div class="site-form__item">
+                                <label for="input[name]">
+                                    <span class="form-field-title">Номер телефона</span>
+                                    <div class="site-form__item-field">
+                                        <input type="phone" placeholder="+998" id="input[phone]" name="phone">
+                                        <span class="form-input-icon">
+                                            <svg>
+                                                <use href="#phone-icon"/>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    
+                                </label>
+                            </div>
+                            <button class="footer__callback-form-submit primary-btn">
+                                Оставить заявку
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer__contacts">
+                <div class="container">
+                    <div class="footer__contacts-left">
+                        <div class="footer__contacts-item footer__contacts-item--email">
+                            <p class="footer__contacts-item-title">
+                                E-mail
+                                <svg>
+                                    <use href="#email-icon"/>
+                                </svg>
+                            </p>
+                            <div class="footer__contacts-item-body">
+                                <a href="mailto:info@cdti.uz">info@cdti.uz</a>
+                            </div>
+                        </div>
+                        <div class="footer__contacts-item footer__contacts-item--tel">
+                            <p class="footer__contacts-item-title">
+                                Телефон
+                                <svg>
+                                    <use href="#phone-icon"/>
+                                </svg>
+                            </p>
+                            <div class="footer__contacts-item-body">
+                                <a href="tel:+998900320115">+998 (90) 032-0115</a>
+                            </div>
+                        </div>
+                        <div class="footer__contacts-item footer__contacts-item--address">
+                            <p class="footer__contacts-item-title">
+                                Адрес
+                                <svg>
+                                    <use href="#address-icon"/>
+                                </svg>
+                            </p>
+                            <div class="footer__contacts-item-body">
+                                Ташкент, Яккасарайский район, <br/>9-й проезд Абдуллы Каххара, 1А
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer__contacts-right">
+                        <div class="footer__contacts-social">
+                            <a href="#"><img src="./assets/images/linkedin.svg" alt="linkedin"></a>
+                            <a href="#"><img src="./assets/images/tg.svg" alt="telegram"></a>
+                        </div>
+                        <div class="footer__up-btn up-btn-js">
+                            <svg>
+                                <use href="#arrow-top-icon"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+<!-- /FOOTER -->
+    </div>
+</body>
+</html>
