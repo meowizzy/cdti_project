@@ -313,7 +313,7 @@ a {
     }
 
     &__middle {
-        flex-grow: 1;
+        width: calc(100% - 42%);
     }
 
     // ====================== header_navigation
@@ -355,7 +355,7 @@ a {
     // ====================== header_navigation
 
     &__left, &__right {
-        flex-basis: 21%;
+        width: 21%;
     }
 
     &__right {
@@ -363,13 +363,22 @@ a {
         align-items: stretch;
         justify-content: flex-end;
         min-height: inherit;
+        position: absolute;
+        top: 0;
+        right: 0;
     }
 
     // ====================== langs
 
     &__langs, &__burger {
         width: 50%;
-        border-left: 1px solid rgba(#fff, .2);
+        border-left: 1px solid rgba($white-color, .2);
+    }
+
+    &__burger {
+        @media all and (min-width: 1024px) {
+            display: none;
+        }
     }
 
     &__langs {
@@ -382,8 +391,8 @@ a {
 
     &__langs-dropdown {
         position: absolute;
-        top: 100%;
-        left: 0;
+        top: calc(100% + 1px);
+        left: -1px;
         right: 0;
         display: flex;
         flex-direction: column;
@@ -393,6 +402,8 @@ a {
         pointer-events: none;
         transition: var(--transition-fast) cubic-bezier(0.25, 0.46, 0.45, 0.94);
         transform: translateY(5px) scale(0.99);
+        border: 1px solid var(--border-bottom-color);
+        border-top: 0;
 
         a {
             display: block;
@@ -405,6 +416,28 @@ a {
             &:hover {
                 color: var(--secondary-color);
                 background-color: var(--primary-color);
+            }
+
+            &:after {
+                content: "";
+                display: block;
+                margin-left: 5px;
+                width: 20px;
+                height: 20px;
+                background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16.8225 6.02073L7.98368 14.8596L3.17853 10.0544L4.06241 9.17053L7.98368 13.0918L15.9386 5.13684L16.8225 6.02073Z' fill='%23EDEDED'/%3E%3C/svg%3E%0A");
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+                display: none;   
+            }
+
+            &.active {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                &:after {
+                    display: block;
+                }
             }
         }
     }
@@ -447,6 +480,9 @@ a {
 }
 .lang-switcher-js {
     $self: &;
+    &__active {
+        transition: var(--transition);
+    }
     &.opened {
         span:before {
             transform: translateY(-50%) rotate(180deg);
@@ -457,135 +493,12 @@ a {
             pointer-events: all;
             transform: translateY(0);       
         }
+
+        #{$self}__active {
+            background-color: var(--dark-color);
+        }
     }
 }
-
-// ====================== footer form
-.footer {
-    margin-top: auto;
-    &__callback {
-        border-bottom: 1px solid var(--border-bottom-color);
-
-        .container {
-            padding-top: 40px;
-            padding-bottom: 59px;
-        }
-    }
-
-    &__callback-header {
-        text-align: center;
-        margin-bottom: 36px;
-    }
-
-    &__callback-form {
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
-        form {
-            display: flex;
-            align-items: flex-start;
-            flex-wrap: wrap;
-        }
-    }
-
-    &__callback-form-submit {
-        margin-top: calc(var(--font-line-m) + 3px);
-    }
-
-    &__contacts {
-        border-bottom: 1px solid var(--border-bottom-color);
-
-        .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-    }
-
-    &__contacts-left {
-        display: flex;
-        align-items: flex-start;
-        flex-wrap: wrap;
-        padding: 13px 0;
-    }
-
-    &__contacts-right {
-        display: flex;
-        align-items: stretch;
-        min-height: 100px;
-
-        & > div {
-            border-left: 1px solid var(--border-bottom-color);
-        }
-    }
-
-    &__contacts-item {
-        margin-right: 60px;
-        &:last-child {
-            margin-right: 0;
-        }
-    }
-
-    &__contacts-item-title {
-        display: flex;
-        align-items: center;
-        font-size: var(--font-size-m);
-        line-height: var(--font-line-m);
-        color: rgba($secondary-color, .8);
-        margin-bottom: 8px;
-
-        svg {
-            max-width: 22px;
-            max-height: 22px;
-            margin-left: 5px;
-        }
-    }
-
-    &__contacts-item-body {
-        font-size: var(--font-size-l);
-        line-height: var(--font-line-l);
-    }
-
-    &__contacts-social {
-        padding: 20px;
-        min-width: 212px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        column-gap: 36px;
-        flex-wrap: wrap;
-        a {
-            display: inline-flex;   
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            img {
-                max-width: 100%;
-                max-height: 100%;
-            }
-        }
-    }
-
-    &__up-btn {
-        min-width: 128px;
-        border-right: 1px solid var(--border-bottom-color);
-        display: flex;  
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        svg {
-            width: 28px;
-            height: 28px;
-        }
-    }
-
-}
-
-// ====================== footer form
-
-
-
 
 
 
@@ -719,7 +632,7 @@ a {
     }
 
     &__col {
-        padding: 39px 50px;
+        padding: 0 50px;
     }
 
     &__col-title {
@@ -743,6 +656,7 @@ a {
         flex-direction: column;
         align-items: center;
         overflow: hidden;
+        margin-top: 80px;
     }
 
     &__marquee-line {
@@ -764,9 +678,32 @@ a {
     &__marquee-item {
         font-size: var(--font-size-xl);
         line-height: var(--font-line-xl);
-        padding: 14px 24px;
+        padding: 14px 74px 14px 24px;
         background-color: var(--dark-color);
         border-radius: var(--radius-m);
+        display: flex;
+        align-items: center;
+        position: relative;
+        .icon {
+            position: absolute;
+            max-width: 50px;
+            max-height: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            top: 50%;
+            right: 24px;
+            transform: translateY(-50%);
+            filter: grayscale(1);
+            transition: var(--transition);
+            img {
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
+        &:hover .icon {
+            filter: grayscale(0);
+        }
     }
 }
 
@@ -774,3 +711,135 @@ a {
 
 
 // ====================== Abilities
+
+
+
+
+// ====================== footer form
+.footer {
+    margin-top: auto;
+    &__callback {
+        border-bottom: 1px solid var(--border-bottom-color);
+
+        .container {
+            padding-top: 40px;
+            padding-bottom: 59px;
+        }
+    }
+
+    &__callback-header {
+        text-align: center;
+        margin-bottom: 36px;
+    }
+
+    &__callback-form {
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        form {
+            display: flex;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+    }
+
+    &__callback-form-submit {
+        margin-top: calc(var(--font-line-m) + 3px);
+    }
+
+    &__contacts {
+        border-bottom: 1px solid var(--border-bottom-color);
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+
+    &__contacts-left {
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding: 13px 0;
+    }
+
+    &__contacts-right {
+        display: flex;
+        align-items: stretch;
+        min-height: 100px;
+
+        & > div {
+            border-left: 1px solid var(--border-bottom-color);
+        }
+    }
+
+    &__contacts-item {
+        margin-right: 60px;
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    &__contacts-item-title {
+        display: flex;
+        align-items: center;
+        font-size: var(--font-size-m);
+        line-height: var(--font-line-m);
+        color: rgba($secondary-color, .8);
+        margin-bottom: 8px;
+
+        svg {
+            max-width: 22px;
+            max-height: 22px;
+            margin-left: 5px;
+        }
+    }
+
+    &__contacts-item-body {
+        font-size: var(--font-size-l);
+        line-height: var(--font-line-l);
+    }
+
+    &__contacts-social {
+        padding: 20px;
+        min-width: 212px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        column-gap: 36px;
+        flex-wrap: wrap;
+        a {
+            display: inline-flex;   
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            img {
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
+    }
+
+    &__up-btn {
+        min-width: 128px;
+        border-right: 1px solid var(--border-bottom-color);
+        display: flex;  
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        svg {
+            width: 28px;
+            height: 28px;
+        }
+    }
+
+
+    &__copyright {
+        text-align: center;
+        
+    }
+}
+
+// ====================== footer form

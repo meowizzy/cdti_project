@@ -69,7 +69,7 @@
             const slideTop = '.abilities__marquee-top';
             const slideBot = '.abilities__marquee-bot';
 
-            const options = { direction: "rtl", speed: 0.15 };
+            const options = { direction: "rtl", speed: 0.09 };
 
             if (slideTop) new Marquee(slideTop, options);   
             if (slideBot) new Marquee(slideBot, {...options, direction: "ltr"});
