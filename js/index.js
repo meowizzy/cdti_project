@@ -21,29 +21,6 @@
             while ((el = el.parentElement) && !el.classList.contains(cls));
             return el;
         },
-        
-        removeActiveClasses(items, className = 'active') {
-            if (items.length) {
-                items.forEach(item => item.classList.remove(className));
-            }
-        },
-        
-        slice(elements, start, end) {
-            let sliced = Array.prototype.slice.call(elements, start, end);
-            return sliced;
-        },
-        
-        getHighestElement(arr) {
-            let max = 0; 
-            
-            for (let i = 0; i < arr.length; i++) {
-                if (max < arr[i].scrollHeight) {
-                    max = arr[i].scrollHeight;
-                }
-            }
-            
-            return max;
-        },
 
         clickOutside(selector, activeClass) {
             if (!selector && !activeClass) return;
@@ -55,14 +32,93 @@
                 }
             });
         }
-
     };
     
     
     myObj.queue = {
+        imagesLazyLoad: function() {
+            let lazyloadImages;    
+
+            if ("IntersectionObserver" in window) {
+                lazyloadImages = document.querySelectorAll(".lazy");
+                const imageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            let image = entry.target;
+                            image.src = image.dataset.src;
+                            image.classList.remove("lazy");
+                            imageObserver.unobserve(image);
+                        }
+                    });
+                });
+
+                lazyloadImages.forEach(function(image) {
+                    imageObserver.observe(image);
+                });
+            } else {  
+                let lazyloadThrottleTimeout;
+                lazyloadImages = document.querySelectorAll(".lazy");
+
+                function lazyload () {
+                    if(lazyloadThrottleTimeout) {
+                        clearTimeout(lazyloadThrottleTimeout);
+                    }    
+
+                    lazyloadThrottleTimeout = setTimeout(function() {
+                        const scrollTop = window.scrollY;
+
+                        lazyloadImages.forEach(function(img) {
+                            if(img.offsetTop < (window.innerHeight + scrollTop)) {
+                                img.src = img.dataset.src;
+                                img.classList.remove('lazy');
+                            }
+                        });
+                        if(lazyloadImages.length == 0) { 
+                            document.removeEventListener("scroll", lazyload);
+                            window.removeEventListener("resize", lazyload);
+                            window.removeEventListener("orientationChange", lazyload);
+                        }
+                    }, 20);
+                }
+
+                document.addEventListener("scroll", lazyload);
+                window.addEventListener("resize", lazyload);
+                window.addEventListener("orientationChange", lazyload);
+            }
+        },  
         
         headerPanel: function() {
-        
+            const headerSelector = ".header";
+            const sidePanelSelector = ".sidepanel";
+            const menu = document.querySelector(`${headerSelector}__list`);
+            const sidePanelLeft = document.querySelector(`${sidePanelSelector}__left`);
+
+            if (sidePanelLeft) {
+                sidePanelLeft.innerHTML = `
+                    <nav class="${sidePanelSelector.replace('.', '')}__navigation">
+                        <ul class="${sidePanelSelector.replace('.', '')}__list">
+                            ${menu.innerHTML}                        
+                        </ul>
+                    </nav>
+                `;
+            }
+        },
+
+        sidePanel: function() {
+            const headerSelector = ".header";
+            const activeClass = "active";
+            const sidePanel = document.querySelector('.sidepanel');
+            const burger = document.querySelector(`${headerSelector}__burger`);
+
+            const handleClick = e => {
+                const parent = helpers.findAncestor(e.target, headerSelector.replace('.', ''));
+                
+                sidePanel.classList.toggle(activeClass);
+                parent.classList.toggle(activeClass);
+                document.documentElement.classList.toggle('locked');
+            };
+
+            if (burger) burger.addEventListener('click', handleClick);
         },
 
         marquee: function() {
@@ -139,7 +195,7 @@
 
     const browserScrollWidth = window.innerWidth - document.body.offsetWidth; 
         
-    document.body.style.setProperty('--scrollWidth', `${browserScrollWidth}px`);
+    document.documentElement.style.setProperty('--scrollWidth', `${browserScrollWidth}px`);
 
     myObj.init();
     
