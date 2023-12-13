@@ -75,6 +75,18 @@
             if (slideBot) new Marquee(slideBot, {...options, direction: "ltr"});
         },
 
+        masonry: function() {
+            const elem = document.querySelector('.team__list');
+            const msnry = new Masonry( elem, {
+                itemSelector: '.team__item',
+                fitWidth: true
+            });
+
+            if (isMobile && window.matchMedia("all and (max-width: 480px)").matches) {
+                msnry.destroy();
+            }
+        },
+
         langSwitcher: function() {
             const parent = ".lang-switcher-js";
             const selector = ".lang-switcher-js__active";
