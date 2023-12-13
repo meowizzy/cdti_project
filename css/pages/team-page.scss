@@ -1,0 +1,13 @@
+.app.inner-page {
+    .team {
+        background-color: transparent;
+
+        .container {
+            padding-bottom: 0;
+        }
+
+        &__name, &__position {
+            color: var(--secondary-color);
+        }
+    }
+}

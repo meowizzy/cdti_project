@@ -1,0 +1,9 @@
+.app.inner-page .team {
+  background-color: transparent;
+}
+.app.inner-page .team .container {
+  padding-bottom: 0;
+}
+.app.inner-page .team__name, .app.inner-page .team__position {
+  color: var(--secondary-color);
+}/*# sourceMappingURL=team-page.css.map */
