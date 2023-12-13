@@ -101,6 +101,7 @@
   --container-padding: 50px;
   --container-padding-mobile: 20px;
   --marquee-animation-duration: 50s;
+  --header-height: 68px;
 }
 
 .app {
@@ -323,7 +324,7 @@ a {
 .header .container {
   display: flex;
   align-items: center;
-  min-height: 68px;
+  min-height: var(--header-height);
 }
 .header__logo a, .header__logo img {
   max-width: 100%;
@@ -502,6 +503,7 @@ a {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  min-height: calc(100vh - var(--header-height));
 }
 .banner.container {
   padding-bottom: 40px;
@@ -740,6 +742,7 @@ a {
 }
 .footer__contacts {
   border-bottom: 1px solid var(--border-bottom-color);
+  position: relative;
 }
 .footer__contacts .container {
   display: flex;
@@ -756,6 +759,10 @@ a {
   display: flex;
   align-items: stretch;
   min-height: 100px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
 .footer__contacts-right > div {
   border-left: 1px solid var(--border-bottom-color);
@@ -1008,6 +1015,7 @@ a {
 .projects__item-subtitle {
   font-size: var(--font-size-xm);
   line-height: var(--font-line-xm);
+  font-family: var(--font-secondary);
 }
 .projects__btn {
   text-align: center;

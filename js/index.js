@@ -69,10 +69,12 @@
             const slideTop = '.abilities__marquee-top';
             const slideBot = '.abilities__marquee-bot';
 
-            const options = { direction: "rtl", speed: 0.09 };
+            if (document.querySelector(slideTop) || document.querySelector(slideBot)) {
+                const options = { direction: "rtl", speed: 0.09 };
 
-            if (slideTop) new Marquee(slideTop, options);   
-            if (slideBot) new Marquee(slideBot, {...options, direction: "ltr"});
+                new Marquee(slideTop, options);   
+                new Marquee(slideBot, {...options, direction: "ltr"});
+            }
         },
 
         masonry: function() {
@@ -135,14 +137,11 @@
         }
     };
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const browserScrollWidth = window.innerWidth - document.body.offsetWidth; 
+    const browserScrollWidth = window.innerWidth - document.body.offsetWidth; 
         
-        document.body.style.setProperty('--scrollWidth', `${browserScrollWidth}px`);
+    document.body.style.setProperty('--scrollWidth', `${browserScrollWidth}px`);
 
-        myObj.init();
-    });
-    
+    myObj.init();
     
 }());
 
