@@ -737,6 +737,11 @@ a {
             text-align: center;
             color: var(--secondary-color);
             transition: background-color var(--transition), color var(--transition);
+            
+            @media all and (max-width: 768px) {
+                padding: 10px;
+            }
+            
             &:hover {
                 color: var(--secondary-color);
                 background-color: var(--primary-color);
