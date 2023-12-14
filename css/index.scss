@@ -22,7 +22,7 @@
 @include font-face("NeueMachina", "NeueMachina-Ultrabold", 800, normal);
 
 $white-color: #FFF;
-$primary-color: #1C1F24;
+$primary-color: #1E1E1E;
 $blue-color: #2F55F2;
 $error-color: #F24C4C;
 $dark-color: #292D33;
@@ -73,7 +73,7 @@ $secondary-color: #EDEDED;
     --font-weight-bold: 700;
     --font-weight-black: 900;
 
-    --primary-color: #1C1F24;
+    --primary-color: #1E1E1E;
     --white-color: #FFF;  
     --secondary-color: #EDEDED;
     --blue-color: #2F55F2;
@@ -83,6 +83,7 @@ $secondary-color: #EDEDED;
     --dark-color: #292D33;
     --border-bottom-color: rgba(237, 237, 237, .2);
     --light-gray: #E3E3E3;
+    --skeleton-color: #1E1E1E0D;
 
     --radius-m: 3px;
     --field-height: 44px;
@@ -289,6 +290,10 @@ html.locked {
     &__langs {
         gap: 16px;
         
+        @media all and (max-width: 479px) {
+            gap: 8px;
+        }
+
         a {
             color: var(--primary-color);
             font-size: var(--font-size-l);
@@ -297,6 +302,9 @@ html.locked {
             display: inline-block;
             border: 2px solid transparent;
             transition: background-color var(--transition), color var(--transition);
+            @media all and (max-width: 768px) {
+                padding: 4px 16px;
+            }
             &:hover, &.active {
                 background: var(--blue-color);
                 color: var(--white-color);
@@ -741,7 +749,7 @@ a {
             @media all and (max-width: 768px) {
                 padding: 10px;
             }
-            
+
             &:hover {
                 color: var(--secondary-color);
                 background-color: var(--primary-color);
@@ -1575,6 +1583,7 @@ a {
         margin-bottom: 12px;
         position: relative;
         padding-top: 112.9%;
+        background-color: var(--skeleton-color);
         transform-style: preserve-3d;
         transition: transform var(--transition-slow) var(--transition-type-cubic);
         & > div {
@@ -1889,3 +1898,37 @@ a {
 
 
 // ====================== Projects
+
+
+
+
+
+
+
+// Animation
+
+.animation-container {
+    &__plane {
+        min-height: 500vh;
+        position: relative;
+        video {
+            max-width: 720px;
+            max-height: 720px;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Animation

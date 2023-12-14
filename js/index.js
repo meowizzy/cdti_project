@@ -1,5 +1,3 @@
-
-
 (function () {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|Opera Mini/i.test(navigator.userAgent);
     const myObj = {
