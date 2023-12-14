@@ -188,6 +188,23 @@
             });
 
             $btn.addEventListener('click', handleClick);
+        },
+
+        gsapAnimation: function() {
+            const videos = document.querySelectorAll(".animation-container__videos video");
+
+            if (videos.length) {
+                videos.forEach((video, index) => {
+                    const handleVideoEnd = () => {
+                        if (index !== videos.length-1) {
+                            video.remove()
+                        } else video.play();
+                        if (video[index+1]) video[index+1].play();
+                    };
+
+                    video.addEventListener('ended', handleVideoEnd);
+                });
+            }
         }
     };
 

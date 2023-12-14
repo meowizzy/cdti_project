@@ -1909,11 +1909,22 @@ a {
 
 .animation-container {
     &__plane {
-        min-height: 500vh;
+        min-height: 720px;
         position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         video {
             max-width: 720px;
             max-height: 720px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            &:first-child {
+                display: block;
+            }
         }
     }
 }

@@ -1714,10 +1714,21 @@ a {
 }
 
 .animation-container__plane {
-  min-height: 500vh;
+  min-height: 720px;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .animation-container__plane video {
   max-width: 720px;
   max-height: 720px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+.animation-container__plane video:first-child {
+  display: block;
 }/*# sourceMappingURL=index.css.map */
