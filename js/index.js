@@ -258,120 +258,247 @@
         },
 
         gsapAnimation: function() {
-            const textsContainer = document.querySelector('.animation-container__text');
-            const videosContainer = document.querySelector('.animation-container__videos');
-            const texts = document.querySelectorAll('.text-section');
+            const wrap = document.querySelector('.animation-container');
+            const videosWrap = document.querySelector('.animation-container__videos');
             const videos = document.querySelectorAll('.animation-container__videos video');
+            const textsWrap = document.querySelector(".animation-container__text");
+            const texts = document.querySelectorAll('.text-section');
 
             const timings = {
-                begin: 0,
-                loop: 1,
-                fast: 2,
-                end: 3
+                begin: videos[0],
+                loop: videos[1],
+                fast: videos[2],
+                end: videos[3]
             };
 
             gsap.registerPlugin(ScrollTrigger);
 
-            const animateShowBlock = (bl, duration) => {
-                bl.classList.add('active');
-                
-                gsap.fromTo(bl, 
-                    {
-                        opacity: 0,
-                        y: -50
-                    },
-                    {
+            function setAnimation() {
+                texts.forEach((item, index) => {
+                    const body = item.querySelector('.text-section__body');
+                    const list = item.querySelectorAll('.text-section__list li');
+                    gsap.to(item, {
+                        translateY: 400,
+                        translateX: 0,
                         opacity: 1,
-                        y: 0,
-                        duration
-                    }
-                );
-            };
+                        duration: 3,
+                        scrollTrigger: {
+                            trigger: item,
+                            start: 'top 70%',
+                            end: '80% 50%',
+                            scrub: true,
+                            onToggle: (self) => {
+                                if (self.isActive) {
+                                    timings.loop.classList.add('hide');
+                                    timings.loop.classList.remove('show');
 
-            const animateHideBlock = (bl, duration) => {
-                bl.classList.remove('active');
-                gsap.to(bl, 
-                    {
-                        opacity: 0,
-                        y: -50,
-                        duration
-                    }
-                );
-            };
+                                    timings.fast.classList.add('show');
+                                    timings.fast.play();
 
-            if (videos.length && texts.length) {
-                let textsCounter = 0;
+                                    if (index !== texts.length - 1) {
+                                        gsap.to(body, {
+                                            translateY: "-488px",
+                                            duration: 1,
+                                            scrollTrigger: {
+                                                trigger: item,
+                                                start: 'top 70%',
+                                                end: '80% 50%',
+                                                scrub: true,
+                                            }
+                                        });
+                                    }
 
-                const handleChangeScene = () => {
-                    videos[timings.loop].classList.add('hide');
+                                    if (list.length) {
+                                        list.forEach(listItem => {
+                                            gsap.to(listItem,
+                                                {
+                                                    translateX: "0",
+                                                    duration: 6,
+                                                    scrollTrigger: {
+                                                        trigger: item,
+                                                        start: 'top 80%',
+                                                        end: 'bottom 80%',
+                                                        scrub: true,
+                                                }
+                                            });
+                                        });
+                                    }
 
-                    if (textsCounter < texts.length - 1) {
-                        videos[timings.fast].classList.remove("hide");
-                        videos[timings.fast].classList.add("show");
-                        videos[timings.fast].play();
+                                    timings.fast.addEventListener('ended', function () {
+                                        this.classList.add('hide');
+                                        this.classList.remove('show');
 
-                        animateHideBlock(texts[textsCounter], 2);
-
-                        videos[timings.fast].addEventListener('ended', function() {
-                            if (texts[textsCounter-1]) texts[textsCounter-1].classList.add('hide');
-                            else texts[textsCounter].classList.add('hide');
-
-                            animateShowBlock(texts[textsCounter], 2);
-
-                            this.classList.add('hide');
-                            this.classList.remove('show');
-                            videos[timings.loop].classList.remove('hide');
-                            videos[timings.loop].classList.add('show');
-                            videos[timings.loop].play();
-                        });
-                    } else {
-                        textsContainer.remove();
-                        gsap.to(videosContainer, {
-                            x: 0,
-                            y: 0,
-                            duration: 1
-                        });
-
-                        videos[timings.loop].removeAttribute('loop');
-                        videos[timings.loop].classList.remove('hide');
-                        videos[timings.loop].classList.add('show');
-
-                        videos[timings.loop].addEventListener('ended', function() {
-                            videos[timings.loop].classList.add('hide');
-                            videos[timings.loop].classList.remove('show');
-                            videos[timings.end].classList.add('show');
-                            videos[timings.end].play();
-                        });
-                    }
-
-                    ++textsCounter;
-                };
-
-                videos[timings.begin].addEventListener('ended', function() {
-                    gsap.to(videosContainer, {
-                        x: -500,
-                        y: 0,
-                        duration: 1
+                                        timings.loop.classList.remove("hide");
+                                        timings.loop.classList.add("show");
+                                        timings.loop.play();
+                                    });
+                                }
+                            }
+                        },
                     });
-
-                    videos[timings.begin].classList.add('hide');
-                    videos[timings.loop].classList.add('show');
-                    videos[timings.loop].play();
-                });
-
-                videos[timings.loop].addEventListener('play', function() {
-                    if (textsCounter < texts.length - 1) {
-                        animateShowBlock(texts[textsCounter], 2);
-                    }
-                });
-
-                document.addEventListener('click', function(event) {
-                    if (event.target.closest('.text-section')) {
-                        handleChangeScene();
-                    }
                 });
             }
+
+            gsap.to(videosWrap, {
+                scrollTrigger: {
+                    trigger: videosWrap,
+                    start: "start start",
+                    end: "bottom bottom",
+                    pin: true,
+                    scrub: 1,
+                    onToggle: (self) => {
+                        if (self.isActive) {
+                            timings.begin.play();
+
+                            timings.begin.addEventListener("ended", function () {
+                                this.pause();
+                                this.currentTime = 0;
+                                this.classList.add('hide');
+
+                                timings.loop.classList.add("show");
+                                timings.loop.play();
+
+                                timings.loop.addEventListener("play", function () {
+                                    gsap.to(videosWrap, {
+                                        x: "-500",
+                                        duration: 1
+                                    });
+
+                                    setAnimation();
+                                });
+                            });
+                        }
+                    }
+                }
+            });
         }
+
+        // gsapAnimation: function() {
+        //     const wrap = document.querySelector('.animation-container');
+        //     const textsContainer = document.querySelector('.animation-container__text');
+        //     const videosContainer = document.querySelector('.animation-container__videos');
+        //     const texts = document.querySelectorAll('.text-section');
+        //     const videos = document.querySelectorAll('.animation-container__videos video');
+
+        //     const timings = {
+        //         begin: 0,
+        //         loop: 1,
+        //         fast: 2,
+        //         end: 3
+        //     };
+
+        //     gsap.registerPlugin(ScrollTrigger);
+
+        //     const animateShowBlock = (bl, duration) => {
+        //         bl.classList.add('active');
+                
+        //         gsap.fromTo(bl, 
+        //             {
+        //                 opacity: 0,
+        //                 y: -50
+        //             },
+        //             {
+        //                 opacity: 1,
+        //                 y: 0,
+        //                 duration
+        //             }
+        //         );
+        //     };
+
+        //     const animateHideBlock = (bl, duration) => {
+        //         bl.classList.remove('active');
+        //         gsap.to(bl, 
+        //             {
+        //                 opacity: 0,
+        //                 y: -50,
+        //                 duration
+        //             }
+        //         );
+        //     };
+
+        //     if (videos.length && texts.length) {
+        //         let textsCounter = 0;
+
+        //         const handleChangeScene = () => {
+        //             videos[timings.loop].classList.add('hide');
+
+        //             if (textsCounter < texts.length - 1) {
+        //                 videos[timings.fast].classList.remove("hide");
+        //                 videos[timings.fast].classList.add("show");
+        //                 videos[timings.fast].play();
+
+        //                 animateHideBlock(texts[textsCounter], 2);
+
+        //                 videos[timings.fast].addEventListener('ended', function() {
+        //                     if (texts[textsCounter-1]) texts[textsCounter-1].classList.add('hide');
+        //                     else texts[textsCounter].classList.add('hide');
+
+        //                     animateShowBlock(texts[textsCounter], 1);
+
+        //                     this.classList.add('hide');
+        //                     this.classList.remove('show');
+        //                     videos[timings.loop].classList.remove('hide');
+        //                     videos[timings.loop].classList.add('show');
+        //                     videos[timings.loop].play();
+        //                 });
+        //             } else {
+        //                 textsContainer.remove();
+        //                 gsap.to(videosContainer, {
+        //                     x: 0,
+        //                     y: 0,
+        //                     duration: 1
+        //                 });
+
+        //                 videos[timings.loop].removeAttribute('loop');
+        //                 videos[timings.loop].classList.remove('hide');
+        //                 videos[timings.loop].classList.add('show');
+
+        //                 videos[timings.loop].addEventListener('ended', function() {
+        //                     videos[timings.loop].classList.add('hide');
+        //                     videos[timings.loop].classList.remove('show');
+        //                     videos[timings.end].classList.add('show');
+        //                     videos[timings.end].play();
+        //                 });
+
+        //                 videos[timings.end].addEventListener('ended', function() {
+        //                     gsap.to(wrap, {
+        //                         height: 0,
+        //                         overfloe: "hidden",
+        //                         duration:.3,
+        //                         immediateRender: false,
+        //                         ease:"expo.inOut",
+        //                     });
+        //                 });
+        //             }
+
+        //             ++textsCounter;
+        //         };
+
+        //         videos[timings.begin].addEventListener('ended', function() {
+        //             gsap.to(videosContainer, {
+        //                 x: -500,
+        //                 y: 0,
+        //                 duration: 1
+        //             });
+
+        //             videos[timings.begin].classList.add('hide');
+        //             videos[timings.loop].classList.add('show');
+        //             videos[timings.loop].play();
+        //         });
+
+        //         videos[timings.loop].addEventListener('play', function() {
+        //             if (textsCounter < texts.length - 1) {
+        //                 animateShowBlock(texts[textsCounter], 1);
+        //             }
+        //         });
+
+        //         document.addEventListener('click', function(event) {
+        //             if (event.target.closest('.text-section')) {
+        //                 handleChangeScene();
+        //             }
+        //         });
+        //     }
+        // }
     };
 
     const browserScrollWidth = window.innerWidth - document.body.offsetWidth; 
