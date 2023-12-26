@@ -257,12 +257,25 @@
             $btn.addEventListener('click', handleClick);
         },
 
-        gsapAnimation: function() {
-            const wrap = document.querySelector('.animation-container');
-            const videosWrap = document.querySelector('.animation-container__videos');
+        animationBlock: function () {
+            const wrapper = document.querySelector(".app");
+            const root = document.querySelector('.animation-container');
+            const videosContainer = document.querySelector(".animation-container__videos");
             const videos = document.querySelectorAll('.animation-container__videos video');
-            const textsWrap = document.querySelector(".animation-container__text");
-            const texts = document.querySelectorAll('.text-section');
+            const texts = document.querySelectorAll('.animation-container__text-in .text-section');
+
+            const clear = () => {
+                wrapper.classList.remove("anim");
+                helpers.marquee();
+                window.dispatchEvent(new Event('resize'));
+            };
+
+            if (!videosContainer && !videos.length && !texts.length) {
+                clear();
+                return;
+            }
+
+            let textsCounter = 0;
 
             const timings = {
                 begin: videos[0],
@@ -271,107 +284,137 @@
                 end: videos[3]
             };
 
-            gsap.registerPlugin(ScrollTrigger);
+            const textsShowAnim = (target) => {
+                if (!target) return;
+                const listItems = target.querySelectorAll('.text-section__list li');
 
-            function setAnimation() {
-                texts.forEach((item, index) => {
-                    const body = item.querySelector('.text-section__body');
-                    const list = item.querySelectorAll('.text-section__list li');
-                    gsap.to(item, {
-                        translateY: 400,
-                        translateX: 0,
-                        opacity: 1,
-                        duration: 3,
-                        scrollTrigger: {
-                            trigger: item,
-                            start: 'top 70%',
-                            end: '80% 50%',
-                            scrub: true,
-                            onToggle: (self) => {
-                                if (self.isActive) {
-                                    timings.loop.classList.add('hide');
-                                    timings.loop.classList.remove('show');
-
-                                    timings.fast.classList.add('show');
-                                    timings.fast.play();
-
-                                    if (index !== texts.length - 1) {
-                                        gsap.to(body, {
-                                            translateY: "-488px",
-                                            duration: 1,
-                                            scrollTrigger: {
-                                                trigger: item,
-                                                start: 'top 70%',
-                                                end: '80% 50%',
-                                                scrub: true,
-                                            }
-                                        });
-                                    }
-
-                                    if (list.length) {
-                                        list.forEach(listItem => {
-                                            gsap.to(listItem,
-                                                {
-                                                    translateX: "0",
-                                                    duration: 6,
-                                                    scrollTrigger: {
-                                                        trigger: item,
-                                                        start: 'top 80%',
-                                                        end: 'bottom 80%',
-                                                        scrub: true,
-                                                }
-                                            });
-                                        });
-                                    }
-
-                                    timings.fast.addEventListener('ended', function () {
-                                        this.classList.add('hide');
-                                        this.classList.remove('show');
-
-                                        timings.loop.classList.remove("hide");
-                                        timings.loop.classList.add("show");
-                                        timings.loop.play();
-                                    });
-                                }
+                if (listItems.length) {
+                    listItems.forEach((item, index) => {
+                        gsap.to(item,
+                            {
+                                translateX: 0,
+                                duration: (index+2)/10+1
                             }
-                        },
+                        );
                     });
+                }
+
+                gsap.fromTo(target,
+                    {
+                        opacity: 0,
+                        y: 50,
+                    },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 2.5
+                    }
+                );
+            };
+
+            const textHideAnim = (target) => {
+                gsap.to(target, {
+                    opacity: 0,
+                    y: 50,
+                    duration: 1
                 });
+            };
+
+            const showVideo = (video) => {
+                video.classList.remove("hide");
+                video.classList.add("show");
+                video.play();
+            }
+            const hideVideo = (video) => {
+                video.classList.remove("show");
+                video.classList.add("hide");
+                video.pause();
+                video.currentTime = 0;
+            }
+            const handleWheelDown = (e) => {
+                if (e.deltaY > 0) {
+                    if (textsCounter < texts.length) {
+                        hideVideo(timings.loop);
+                        showVideo(timings.fast);
+                    } else {
+                        gsap.to(videosContainer, {
+                            x: 0,
+                            duration: 1,
+                            oncomplete() {
+                                hideVideo(timings.loop);
+                                showVideo(timings.end);
+
+                                textHideAnim(texts[texts.length - 1]);
+                                texts[texts.length - 1].style.display = "none";
+
+                                timings.end.addEventListener("ended", function () {
+                                    gsap.to(root, {
+                                        minHeight: 0,
+                                        height: 0,
+                                        duration: 0.5,
+                                        oncomplete() {
+                                            clear();
+                                            window.removeEventListener("wheel", handleWheelDown);
+                                        }
+                                    });
+                                });
+                            }
+                        });
+                    }
+
+                    return;
+                }
+            };
+
+            timings.fast.addEventListener("ended", function () {
+                showVideo(timings.loop);
+                hideVideo(this);
+
+                if (textsCounter < texts.length) {
+                    textHideAnim(texts[textsCounter - 1]);
+                    textsShowAnim(texts[textsCounter]);
+                }
+
+                ++textsCounter;
+            });
+
+            timings.begin.addEventListener("play", function () {
+                gsap.from(videosContainer, {
+                    y: 500,
+                    x: 0,
+                    duration: 2
+                });
+            });
+
+            timings.begin.addEventListener("ended", function () {
+                this.classList.add('hide');
+                showVideo(timings.loop);
+
+                gsap.to(videosContainer, {
+                    y: 0,
+                    x: -500,
+                    duration: 1,
+                    oncomplete: function () {
+                        textsShowAnim(texts[textsCounter]);
+                        root.addEventListener("wheel", handleWheelDown);
+                        ++textsCounter;
+                    }
+                });
+            });
+
+            if (window.scrollY >= root.offsetTop && textsCounter === 0) {
+                timings.begin.play();
             }
 
-            gsap.to(videosWrap, {
-                scrollTrigger: {
-                    trigger: videosWrap,
-                    start: "start start",
-                    end: "bottom bottom",
-                    pin: true,
-                    scrub: 1,
-                    onToggle: (self) => {
-                        if (self.isActive) {
-                            timings.begin.play();
-
-                            timings.begin.addEventListener("ended", function () {
-                                this.pause();
-                                this.currentTime = 0;
-                                this.classList.add('hide');
-
-                                timings.loop.classList.add("show");
-                                timings.loop.play();
-
-                                timings.loop.addEventListener("play", function () {
-                                    gsap.to(videosWrap, {
-                                        x: "-500",
-                                        duration: 1
-                                    });
-
-                                    setAnimation();
-                                });
-                            });
-                        }
-                    }
+            const handleWindowScroll = () => {
+                if (window.scrollY >= (root.offsetTop - 500) && textsCounter === 0) {
+                    timings.begin.play();
                 }
-            });
-        }
+            };
+
+            window.addEventListener("scroll", handleWindowScroll);
+
+        },
 
         // gsapAnimation: function() {
         //     const wrap = document.querySelector('.animation-container');

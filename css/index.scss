@@ -1909,11 +1909,13 @@ a {
 
 .animation-container {
     overflow: hidden;
+    min-height: 100vh;
     &__plane {
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
+      min-height: inherit;
     }
     &__videos {
       max-width: 720px;
@@ -1934,6 +1936,10 @@ a {
       width: 100%;
       height: 720px;
       object-fit: contain;
+      opacity: .9;
+      &:first-child, &:last-child {
+        object-fit: cover;
+      }
   
       display: none;
   
@@ -1953,7 +1959,6 @@ a {
     &__text {
       width: 100%;
       height: 100%;
-      margin-top: 300vh;
     }
   
     &__text-in {
@@ -1974,12 +1979,9 @@ a {
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    min-height: 100vh;
-    margin-bottom: 100vh;
-    transform: translateX(300px);
-    &:last-child {
-      margin-bottom: 50vh;
-    }
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
   
     &__in {
       max-width: 523px;
@@ -1993,6 +1995,7 @@ a {
       font-size: var(--font-size-large);
       line-height: var(--font-line-large);
       font-weight: var(--font-weight-medium);
+      margin-bottom: 12px;
     }
   
     &__subtitle {
@@ -2003,13 +2006,6 @@ a {
     }
   
     &__body {
-      margin-top: 500px;
-    }
-  
-    &:last-child {
-      .text-section__body {
-        margin-top: 12px;
-      }
     }
   
     &__desc, &__list li {
@@ -2034,8 +2030,15 @@ a {
       li {
         position: relative;
         padding-left: 48px;
-        font-family: var(--font-secondary);
+        font-family: var(--font-default);
         transform: translateX(100px);
+  
+        span {
+          display: block;
+          font-size: var(--font-size-xl);
+          line-height: 28px;
+          font-weight: var(--font-weight-black);
+        }
         &:before {
           @include pseudo();
           top: 50%;
@@ -2058,8 +2061,11 @@ a {
   }
 
 
-
-
+  .anim {
+    .projects,  .abilities, .team, .footer {
+      display: none;
+    }
+  }
 
 
 
